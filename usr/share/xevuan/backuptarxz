@@ -1,0 +1,57 @@
+#!/bin/bash
+
+_user="$(who|awk '{print $1}')"
+archivename=$(date +"%y-%m-%d-%H%M")
+
+clear
+echo "backuptarxz"
+echo ""
+
+echo "Cleaning.."
+bleachbit -c --preset
+echo ""
+
+sleep 2
+
+echo "Starting backup" ; sleep 1
+echo "1/3 Retrieve old uuid"
+echo "" ; sleep 1
+
+cd /
+installdrv=$(df -hT | grep /$ | cut -d " " -f 1)
+findmnt $installdrv -o UUID -n > olduuid
+echo "UUID saved"
+cat /olduuid
+echo ""
+
+sleep 2
+
+clear
+echo "2/3 Create backup tar"
+echo ""
+sleep 2
+tartemp=$(mktemp -d)
+cd $tartemp
+
+XZ_OPT=-9 tar -cJpvf $HOSTNAME-$archivename.txz --exclude=media --exclude=$tartemp/$HOSTNAME-$archivename.txz --one-file-system /
+
+echo ""
+echo "Syncing.." && sync && echo "Syncing complete"
+sleep 1
+echo ""
+
+clear
+echo "3/3 Copying to desktop"
+echo "" ; sleep 1
+cp $tartemp/$HOSTNAME-$archivename.txz /home/$_user/Desktop/$HOSTNAME-$archivename.txz
+chown $_user:$_user /home/$_user/Desktop/$HOSTNAME-$archivename.txz
+sleep 1
+echo "Syncing.." && sync && echo "Syncing complete"
+echo ""
+echo "Backup complete"
+echo ""
+sleep 1
+echo "Exiting"
+echo ""
+sleep 1
+exit

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+tmpdir=$(mktemp -d)
+cd $tmpdir
+wget https://downloads.slack-edge.com/linux_releases/slack-desktop-4.13.0-amd64.deb
+dpkg -i slack-desktop-4.13.0-amd64.deb ; apt install -f
+notify-send "Slack installed"

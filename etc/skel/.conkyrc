@@ -1,0 +1,53 @@
+conky.config = {
+
+background=true,
+update_interval=1,
+double_buffer=true,
+no_buffers=true,
+imlib_cache_size=10,
+
+draw_shades=false,
+draw_outline=false,
+draw_borders=false,
+
+gap_x=30,
+gap_y=10,
+
+alignment="top_right",
+
+minimum_height=30,
+minimum_width=280,
+
+own_window=true,
+own_window_type="dock",
+own_window_transparent=true,
+own_window_hints="undecorated,below,sticky,skip_taskbar,skip_pager",
+
+own_window_argb_visual=true,
+own_window_argb_value=0,
+
+use_xft=true,
+xftalpha=1,
+font="Montserrat:size=9",
+text_buffer_size=256,
+override_utf10_locale=true,
+
+default_color='DDD',
+
+color0='DDD', -- clock
+color1='DDD', -- date
+color3='DDD',
+
+template9=""
+
+}
+
+
+---------------------------------------------------
+---------------------------------------------------
+
+
+conky.text = [[
+
+${alignr}${color1}${font Montserrat Light:size=8} RAM ${font Montserrat Semibold:size=8}${color0}${execi 3 /usr/share/xevuan/accurate-ram-usage | sed 's/.$//'} / ${exec free -h | awk '/Mem\:/ { print $2 }' | sed 's/.$//'}          ${font Montserrat Light:size=8}${alignr}${color1}HDD ${font Montserrat Semibold:size=8}${color0}${execi 60 df -h / | awk '{print $3; }' | sed '1d'} / ${exec df -h / | awk '{print $2; }' | sed '1d'}          ${font Montserrat Light:size=8}${alignr}${color1}NET ${font Montserrat Semibold:size=8}${execi 300 vnstat -i eth0 -m | grep "`date +"%b '%y"`" | awk '{print $9""substr ($10, 1, 1)}'}${execi 3600 /usr/share/xevuan/ifupdates}     \
+]]

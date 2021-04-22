@@ -1,0 +1,8 @@
+#!/bin/bash
+apt autoremove -y
+apt autoclean
+apt clean
+dpkg -l | grep '^rc' | awk '{print $2}' | xargs apt purge -y
+apt update
+apt upgrade
+exit

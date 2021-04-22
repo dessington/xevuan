@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Update / Upgrade / Clean
+Comment=
+Exec=sudo xfce4-terminal -e '/usr/share/xevuan/update'
+Icon=btsync-gui-0
+Path=
+Terminal=false
+StartupNotify=false

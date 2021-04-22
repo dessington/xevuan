@@ -1,0 +1,8 @@
+#!/bin/bash
+
+clear
+echo "Large files in $PWD"
+echo ""
+find $(pwd) -type f -size +1000000k | xargs -I% du -sh % | sort -h -k1 -u | tail -15 2> /dev/null
+echo ""
+read

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+clear
+read -p "ZRam Allocation (MiB) " zramswap
+
+echo "CORES=1" > /etc/default/zramswap
+echo "ALLOCATION=$zramswap" >> /etc/default/zramswap

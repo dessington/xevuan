@@ -1,0 +1,10 @@
+#!/bin/bash
+
+_user="$(who|awk '{print $1}')"
+
+updatesavailable=$(sudo cat /root/updates)
+
+if [ $updatesavailable != 0 ];
+then
+notify-send "$updatesavailable updates available" && sudo /usr/share/xevuan/updates && touch -m /home/$_user/.conkyrc
+fi

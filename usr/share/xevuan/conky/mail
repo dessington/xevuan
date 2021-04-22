@@ -1,0 +1,1 @@
+MAIL {execi 300 /usr/share/xevuan/imap.py}

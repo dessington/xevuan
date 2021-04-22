@@ -1,0 +1,5 @@
+#!/bin/bash
+
+curl -L https://git.io/bootiso -O
+chmod +x bootiso
+mv bootiso /usr/local/bin/

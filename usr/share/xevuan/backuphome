@@ -1,0 +1,21 @@
+#!/bin/bash
+
+_user="$(who|awk '{print $1}')"
+
+archivename=$(date +"%y-%m-%d-%H%M")
+tartemp=$(mktemp -d)
+
+echo "Backup up home folder"
+echo ""
+cd $tartemp
+tar -czC /home/$_user --exclude=home-$archivename.tar.gz ./ --transform='s,^\./,,' >| home-$archivename.tar.gz
+echo "Copying to desktop"
+echo ""
+cp $tartemp/home-$archivename.tgz /home/$_user/Desktop/home-$HOSTNAME-$archivename.tgz
+chown $_user:$_user /home/$_user/Desktop/home-$archivename.tgz
+echo "Syncing.." && sync && echo "Syncing complete"
+echo ""
+echo "Backup complete"
+echo ""
+sleep 1
+exit

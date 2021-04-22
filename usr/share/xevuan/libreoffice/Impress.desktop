@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Impress
+Comment=
+Exec=/opt/libreoffice7.1/program/simpress
+Icon=libreoffice-impress
+Path=
+Terminal=false
+StartupNotify=true
+Categories=Office;

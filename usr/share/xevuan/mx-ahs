@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "deb [trusted=yes] http://mxrepo.com/mx/repo/ buster ahs" >> /etc/apt/sources.list
+curl -O http://mxrepo.com/mx/repo/pool/main/m/mx19-archive-keyring/mx19-archive-keyring_2019.5.31_all.deb
+dpkg -i mx19-archive-keyring_2019.5.31_all.deb
+apt update && apt upgrade -y

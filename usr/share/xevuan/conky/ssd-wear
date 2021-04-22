@@ -1,0 +1,1 @@
+SSD WEAR ${exec sudo smartctl -a /dev/sda | grep Percentage\ Used | cut -c 37-} 

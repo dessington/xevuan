@@ -1,0 +1,1 @@
+xfce4-terminal -e 'genisoimage -lJR -o %f.iso %f'

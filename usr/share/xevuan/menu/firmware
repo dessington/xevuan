@@ -1,0 +1,42 @@
+#!/bin/bash
+
+cd /usr/share/xevuan/menu
+
+while true; do
+  clear
+  echo "Firmware"
+  echo "--------"
+  echo ""
+  echo "  1  atheros"
+  echo "  2  b43-installer"
+  echo "  3  firmware-linux-nonfree"
+  echo "  4  intel-microcode"
+  echo "  5  libertas"
+  echo "  6  qlogic"
+  echo "  7  realtek"
+  echo "  8  ti-connectivity"
+  echo ""
+  echo "  q  Back"
+  echo " "
+  echo -n "Select: "; read f
+  if [ "$f" = "1" ]; then
+    echo "" && apt install -y atheros ; sleep 2
+  elif [ "$f" = "2" ]; then
+    echo "" && apt install -y firmware-b43-installer ; sleep 2
+  elif [ "$f" = "3" ]; then
+    echo "" && apt install -y firmware-linux-nonfree ; sleep 2
+  elif [ "$f" = "4" ]; then
+    echo "" && apt install -y intel-microcode ; sleep 2
+  elif [ "$f" = "5" ]; then
+    echo "" && apt install -y firmware-libertas ; sleep 2
+  elif [ "$f" = "6" ]; then
+    echo "" && apt install -y firmware-qlogic ; sleep 2
+  elif [ "$f" = "7" ]; then
+    echo "" && apt install -y firmware-realtek ; sleep 2
+  elif [ "$f" = "8" ]; then
+    echo "" && apt install -y firmware-ti-connectivity ; sleep 2
+  elif [ "$f" = "q" ]; then
+    clear ; ./start && exit
+  fi
+done
+

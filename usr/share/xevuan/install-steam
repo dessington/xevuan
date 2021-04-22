@@ -1,0 +1,25 @@
+#!/bin/bash
+
+_user="$(who|awk '{print $1}')"
+dpkg --add-architecture i386
+apt update
+
+sleep 2
+
+echo ""
+echo "Installing required packages"
+echo ""
+
+sleep 2
+
+yes | apt install -y mesa-vulkan-drivers libglx-mesa0:i386 mesa-vulkan-drivers:i386 libgl1-mesa-dri:i386 steam steam-devices libxss1
+
+sleep 2
+
+echo ""
+echo "Downloading Steam client"
+echo ""
+
+notify-send "Install will complete once the Steam client has downloaded"
+
+xdotool key "ctrl+shift+t"; xdotool type "steam"; xdotool key Return

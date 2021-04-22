@@ -1,0 +1,6 @@
+#!/bin/bash
+cd /usr/share/xevuan
+mkdir /boot/grub/themes
+cp -r grub/xevuan /boot/grub/themes
+echo "GRUB_THEME=/boot/grub/themes/xevuan/theme.txt" >> /etc/default/grub
+update-grub

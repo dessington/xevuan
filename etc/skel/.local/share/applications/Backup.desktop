@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Backup
+Comment=
+Exec=xfce4-terminal -e 'sudo /usr/share/xevuan/backuptar'
+Icon=process-syncing-down
+Path=
+Terminal=false
+StartupNotify=false
+Categories=System;
+

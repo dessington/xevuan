@@ -1,0 +1,22 @@
+#!/bin/bash
+
+_vboxuser="$(who|awk '{print $1}')"
+
+cd /usr/share/xevuan/virtualbox
+rm *.deb && rm *.vbox-extpack
+
+echo "Installing required packages"
+apt install -y build-essential linux-headers-amd64 linux-headers-5.10.0-0.bpo.3-amd64
+wget --no-check-certificate https://download.virtualbox.org/virtualbox/6.1.18/virtualbox-6.1_6.1.18-142142~Debian~buster_amd64.deb
+dpkg -i virtualbox-6.1_6.1.18-142142~Debian~buster_amd64.deb ; apt install -f -y
+wget --no-check-certificate https://download.virtualbox.org/virtualbox/6.1.18/Oracle_VM_VirtualBox_Extension_Pack-6.1.18.vbox-extpack
+yes | VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-6.1.18.vbox-extpack
+
+cp /usr/share/xevuan/virtualbox/virtualbox.desktop /home/$_vboxuser/.local/share/applications
+chown $_vboxuser:$_vboxuser /home/$_vboxuser/.local/share/applications/virtualbox.desktop
+
+adduser $_vboxuser vboxusers
+/sbin/vboxconfig
+
+echo "Installation complete"
+

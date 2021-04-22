@@ -1,0 +1,15 @@
+#!/bin/bash
+
+_user="$(who|awk '{print $1}')"
+
+chrometmp=$(mktemp -d)
+cd $chrometmp
+
+echo "Installing Google Chrome"
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+dpkg -i google-chrome-stable_current_amd64.deb ; apt install -f -y
+cp /usr/share/xevuan/chrome/google-chrome.desktop /home/$_user/.local/share/applications
+chown $_user:$_user /home/$_user/.local/share/applications/google-chrome.desktop
+
+echo ""
+echo "Done"

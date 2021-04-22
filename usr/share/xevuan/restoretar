@@ -1,0 +1,70 @@
+#!/bin/bash
+
+clear
+echo "Restore"
+echo "-------"
+echo "Restore filesystem to target partition and install GRUB."
+echo "Correct format for options shown in brackets, for target partition enter only the number."
+echo "Target partition must be unmounted."
+echo ""
+sleep 4
+
+# Backup source
+echo ""
+read -p "Backup file (/path/to/backupfile.tgz): " backupfile
+echo ""
+clear
+lsblk
+echo ""
+read -p "Target drive (/dev/sdx): " targetdrive
+read -p "Target partition (1): " targetpartition
+echo ""
+
+# Setup
+echo "Creating new partition.."
+umount $targetdrive$targetpartition
+rm -rf /mnt/restorebackup && mkdir /mnt/restorebackup
+#parted $targetdrive mklabel msdos --script
+#parted $targetdrive mkpart primary 0% 100% --script
+#parted $targetdrive set 1 boot on
+mkfs.ext4 -F $targetdrive$targetpartition
+echo ""
+
+# Restore
+echo "Restoring tar.."
+mount $targetdrive$targetpartition /mnt/restorebackup
+tar -xpvzf $backupfile -C /mnt/restorebackup --numeric-owner
+echo ""
+echo "Syncing.."
+sync
+echo "Syncing complete"
+echo ""
+
+# Reset mount
+umount -l /mnt/restorebackup
+rm -rf /mnt/restoregrub && mkdir /mnt/restoregrub
+mount $targetdrive$targetpartition /mnt/restoregrub
+
+# Restore GRUB
+echo "Restoring GRUB.."
+grub-install --root-directory=/mnt/restoregrub $targetdrive
+olduuid=$(cat /mnt/restoregrub/olduuid)
+newuuid=$(findmnt $targetdrive$targetpartition -o UUID -n)
+
+sleep 3
+echo $newuuid
+sleep 3
+
+echo $newuuid > /mnt/restoregrub/newuuid
+echo "UUID=$newuuid / ext4 noatime,errors=remount-ro 0 1" > /mnt/restoregrub/etc/fstab
+sed -i "s/$olduuid/$newuuid/g" /mnt/restoregrub/boot/grub/grub.cfg
+sync
+echo ""
+
+echo "Unmounting target.."
+umount -l /mnt/restoregrub
+echo ""
+
+echo "Restore complete"
+echo ""
+sleep 2

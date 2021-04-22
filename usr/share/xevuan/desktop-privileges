@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cat << EOF > /etc/polkit-1/localauthority/50-local.d/50-udisks.pkla
+[udisks]
+Identity=unix-group:sudo
+Action=org.freedesktop.udisks2.filesystem-mount-system
+ResultAny=yes
+ResultInactive=no
+ResultActive=yes
+EOF

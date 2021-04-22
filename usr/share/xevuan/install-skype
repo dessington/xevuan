@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Installing Skype.."
+
+tmpdir=$(mktemp -d)
+cd $tmpdir
+
+wget https://go.skype.com/skypeforlinux-64.deb
+dpkg -i skypeforlinux-64.deb ; apt install -f
+
+echo ""
+echo "Installation complete"
+echo ""

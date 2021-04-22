@@ -1,0 +1,6 @@
+#!/bin/bash
+
+swappiness=$(zenity --scale --title "vm.swappiness" --text "Set swappiness" --min-value=10 --max-value=100 --value=10 --step=10)
+sed -i "s/vm.swappiness = ../vm.swappiness = $swappiness/g" /etc/sysctl.d/xevuanctl.conf
+echo "Swappiness set to $swappiness"
+echo ""

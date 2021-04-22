@@ -1,0 +1,1 @@
+${execi 60 vnstat -i eth0 -m | grep "`date +"%b '%y"`" | awk '{print $9""substr ($10, 1, 1)}'}

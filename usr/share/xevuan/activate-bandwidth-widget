@@ -1,0 +1,11 @@
+#!/bin/bash
+
+_user="$(who|awk '{print $1}')"
+
+activeconnection="$(ip addr show | awk '/inet.*brd/{print $NF; exit}')"
+sed -i "s/eth0/$activeconnection/g" /home/$_user/.conkyrc
+vnstat --create -i $activeconnection
+
+rm /etc/skel/.config/autostart/activate-bandwidth-widget.desktop
+rm /home/$_user/.config/autostart/activate-bandwidth-widget.desktop
+rm /root/.config/autostart/activate-bandwidth-widget.desktop

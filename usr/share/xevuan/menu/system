@@ -1,0 +1,36 @@
+#!/bin/bash
+
+cd /usr/share/xevuan/menu
+
+while true; do
+  clear
+  echo "System"
+  echo "------"
+  echo ""
+  echo "  1  Add 256M /swap file"
+  echo "  2  Disable GRUB menu"
+  echo "  3  Install Refracta"
+  echo "  4  Install TRIM"
+  echo "  5  Remove old kernels"
+  echo "  6  Update & clean"
+  echo ""
+  echo "  q  Back"
+  echo ""
+  echo -n "Select: "; read f
+  if [ "$f" = "1" ]; then
+    echo "" && /usr/share/xevuan/add-swap-file ; sleep 2
+  elif [ "$f" = "2" ]; then
+    echo "" && sed -i "s/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g" /etc/default/grub && update-grub && echo "GRUB menu restored" ; sleep 2
+  elif [ "$f" = "3" ]; then
+    echo "" && /usr/share/xevuan/install-refracta && echo "Done" ; sleep 2
+  elif [ "$f" = "4" ]; then
+    echo "" && /usr/share/xevuan/install-trim ; sleep 2
+  elif [ "$f" = "5" ]; then
+    echo "" && /usr/share/xevuan/remove-old-kernels ; sleep 2
+  elif [ "$f" = "6" ]; then
+    echo "" && /usr/share/xevuan/update ; sleep 2
+  elif [ "$f" = "q" ]; then
+    clear ; ./start && exit
+  fi
+done
+

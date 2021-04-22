@@ -1,0 +1,15 @@
+#!/bin/bash
+
+_user="$(who|awk '{print $1}')"
+
+touch -m /home/$_user/.conkyrc
+sleep 1
+/usr/share/xevuan/clean
+sleep 1
+fc-cache -v -f
+sleep 1
+yes | /usr/share/xevuan/update
+rm -rf /home/$_user/.config/autostart/startup.desktop
+rm -rf /etc/skel/.config/autostart/startup.desktop
+rm -rf /root/.config/autostart/startup.desktop
+

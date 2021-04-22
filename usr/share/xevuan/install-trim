@@ -1,0 +1,14 @@
+#!/bin/bash
+cat << EOF > /etc/cron.weekly/fstrim
+#! /bin/sh  
+SSD_MOUNT_POINTS='/'  
+for mount_point in $SSD_MOUNT_POINTS
+do  
+    fstrim $mount_point  
+done
+EOF
+
+chmod +x /etc/cron.weekly/fstrim
+
+echo "Weekly TRIM activated on root drive"
+echo ""

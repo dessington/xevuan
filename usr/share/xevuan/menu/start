@@ -1,0 +1,27 @@
+#!/bin/bash
+
+while true; do
+  clear
+  echo "Extras"
+  echo "------"
+  echo ""
+  echo "  1  Firmware"
+  echo "  2  Software"
+  echo "  3  System"
+  echo "  4  Themes"
+  echo ""
+  echo "  q  Exit"
+  echo ""
+  echo -n "Select: "; read f
+  if [ "$f" = "1" ]; then
+    clear ; ./firmware && exit ;
+  elif [ "$f" = "2" ]; then
+    clear ; ./software && exit ;
+  elif [ "$f" = "3" ]; then
+    clear ; ./system && exit ;
+  elif [ "$f" = "4" ]; then
+    clear ; ./themes && exit ;    
+  elif [ "$f" = "q" ]; then
+    clear ; exit
+  fi
+done

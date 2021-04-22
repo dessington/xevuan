@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Calc
+Comment=
+Exec=/opt/libreoffice7.1/program/scalc
+Icon=libreoffice-calc
+Path=
+Terminal=false
+StartupNotify=true
+Categories=Office;

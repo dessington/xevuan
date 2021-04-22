@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=activate-bandwidth-widget
+Exec=sudo /usr/share/xevuan/activate-bandwidth-widget
+Hidden=false
+
+

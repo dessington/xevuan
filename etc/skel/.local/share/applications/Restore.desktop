@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Restore
+Comment=
+Exec=xfce4-terminal -e 'sudo /usr/share/xevuan/restoretar'
+Icon=process-syncing-up
+Path=
+Terminal=false
+StartupNotify=false
+Categories=System;
+

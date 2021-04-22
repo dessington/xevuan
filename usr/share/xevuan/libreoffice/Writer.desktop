@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Writer
+Comment=
+Exec=/opt/libreoffice7.1/program/swriter
+Icon=libreoffice-writer
+Path=
+Terminal=false
+StartupNotify=true
+Categories=Office;

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+cd /usr/share/xevuan/menu
+
+while true; do
+  clear
+  echo "Themes"
+  echo "======"
+  echo ""
+  echo " 1. Adapta"
+  echo " 2. Materia"
+  echo " 3. Numix"  
+  echo " q  Back"
+  echo " "
+  echo -n "Select: "; read f
+  if [ "$f" = "1" ]; then
+    echo "" && apt install -y adapta-gtk-theme && echo "Theme installed" ; sleep 2
+  elif [ "$f" = "2" ]; then
+    echo "" && apt install -y materia-gtk-theme && echo "Theme installed" ; sleep 2
+  elif [ "$f" = "3" ]; then
+    echo "" && apt install -y numix-gtk-theme && echo "Theme installed" ; sleep 2
+  elif [ "$f" = "q" ]; then
+    clear ; ./start && exit
+  fi
+done
+

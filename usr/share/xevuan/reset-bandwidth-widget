@@ -1,0 +1,7 @@
+#!/bin/bash
+
+_user="$(who|awk '{print $1}')"
+activeconnection="$(ip addr show | awk '/inet.*brd/{print $NF; exit}')"
+sed -i "s/$activeconnection/eth0/g" /home/$_user/.conkyrc
+vnstat --create -i $activeconnection
+rm /home/$_user/.config/autostart/activate-bandwidth-widget.desktop

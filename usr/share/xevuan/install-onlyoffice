@@ -1,0 +1,6 @@
+#!/bin/bash
+cd /tmp
+echo "Installing Openoffice"
+wget --no-check-certificate https://download.onlyoffice.com/install/desktop/editors/linux/onlyoffice-desktopeditors_amd64.deb
+dpkg -i onlyoffice-desktopeditors_amd64.deb ; apt install -f -y
+notify-send "Installation complete"

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+clear
+echo "iso2usb"
+echo ""
+lsblk
+echo ""
+read -p "Target drive (sdx): " targetdrive
+echo ""
+isohybrid $1 && dd if=$1 of=/dev/$targetdrive status=progress
+echo ""
+echo "Syncing.." && sync
+sleep 1
+echo "Syncing complete"
+echo "Exiting"
+sleep 1
+exit

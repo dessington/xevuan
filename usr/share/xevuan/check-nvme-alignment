@@ -1,0 +1,3 @@
+#!/bin/bash
+
+DEVICE=/dev/nvme0n1 && for i in `parted $DEVICE print | grep -oE "^[[:blank:]]*[0-9]+"`; do parted $DEVICE align-check opt "$i"; done

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+while true; do
+  clear
+  echo "Software"
+  echo "--------"
+  echo ""
+  echo "  1  Brave"
+  echo "  2  Chrome"
+  echo "  3  Skype"
+  echo "  4  Slack"
+  echo "  5  Spotify"
+  echo "  6  Sublime Text"
+  echo "  7  Virtualbox"
+  echo ""
+  echo "  q  Back"
+  echo ""
+
+  echo -n "Select: "; read f
+  if [ "$f" = "1" ]; then
+    echo "" && /usr/share/xevuan/install-brave ; sleep 2
+  elif [ "$f" = "2" ]; then
+    echo "" && /usr/share/xevuan/install-chrome ; sleep 2
+  elif [ "$f" = "3" ]; then
+    echo "" && /usr/share/xevuan/install-skype ; sleep 2
+  elif [ "$f" = "4" ]; then
+    echo "" && /usr/share/xevuan/install-slack ; sleep 2    
+  elif [ "$f" = "5" ]; then
+    echo "" && /usr/share/xevuan/install-spotify ; sleep 2
+  elif [ "$f" = "6" ]; then
+    echo "" && /usr/share/xevuan/install-sublime ; sleep 2    
+  elif [ "$f" = "7" ]; then
+    echo "" && /usr/share/xevuan/install-virtualbox ; sleep 2
+  elif [ "$f" = "q" ]; then
+    clear ; ./start && exit
+  fi
+done
+

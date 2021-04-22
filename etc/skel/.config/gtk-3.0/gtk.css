@@ -1,0 +1,12 @@
+vte-terminal {
+    padding: 10px;
+}
+
+XfdesktopIconView.view {
+  -XfdesktopIconView-cell-spacing: 1;
+  -XfdesktopIconView-cell-padding: 5;
+  -XfdesktopIconView-cell-text-width-proportion: 1.5;
+  background: transparent;
+  color: #EEE;
+}
+

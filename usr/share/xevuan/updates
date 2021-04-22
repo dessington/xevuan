@@ -1,0 +1,4 @@
+#!/bin/bash
+aptitude update > /dev/null
+NUMOFUPDATES=$(aptitude search "~U" | wc -l)
+echo "$NUMOFUPDATES" > /root/updates

@@ -1,0 +1,118 @@
+#!/bin/bash
+
+_user="$(id 1000 -u -n)"
+
+apt purge -y dictionaries-common iamerican ispell vim-common wamerican
+
+apt install advancecomp alsa-utils aptitude baobab bc bleachbit bootcd breeze-cursor-theme bsdtar catfish compton compton-conf conky curl dosfstools eject firmware-linux-free git gnome-themes-standard gnupg gparted gsimplecal gtk2-engines-murrine gtk2-engines-pixbuf gvfs gvfs-backends haveged isolinux libgl1-mesa-dri libgl1-mesa-glx libglu1-mesa libnotify-bin librsvg2-common lightdm lightdm-gtk-greeter-settings localepurge nano network-manager-gnome ntfs-3g os-prober p7zip-full policykit-1-gnome software-properties-common sysfsutils syslinux-utils thunar tint2 tumbler tumbler-plugins-extra ulatencyd unzip vnstat volumeicon-alsa wget x11-xserver-utils xdg-utils xdotool xfce4-notifyd xfce4-screenshooter xfce4-session xfce4-settings xfce4-terminal xfdesktop4 xfonts-base xfwm4 xinit xorriso xserver-xorg xserver-xorg-core xz-utils zip zram-tools
+
+rm -r /usr/share/icons/Adwaita ; rm -r /usr/share/themes/Adwaita ; rm -r /usr/share/themes/Adwaita-dark ; rm -r /usr/share/themes/Bright ; rm -r /usr/share/themes/Daloa ; rm -r /usr/share/themes/Emacs ; rm -r /usr/share/themes/Kokodi ; rm -r /usr/share/themes/Moheli ; rm -r /usr/share/themes/Raleigh ; rm -r /usr/share/themes/Retro ; rm -r /usr/share/themes/Smoke ; rm -r /usr/share/themes/ZOMG-PONIES!
+
+rm /usr/share/applications/bleach* ; rm /usr/share/applications/compton.desktop ; rm /usr/share/applications/conky.desktop ; rm /usr/share/applications/display-im6.q16.desktop ; rm /usr/share/applications/exo-mail-reader.desktop ; rm /usr/share/applications/exo-terminal-emulator.desktop ; rm /usr/share/applications/exo-web-browser.desktop ; rm /usr/share/applications/Thunar-bulk-rename.desktop ; rm /usr/share/applications/Thunar.desktop ; rm /usr/share/applications/tint2.desktop ; rm /usr/share/applications/vim.desktop ; rm /usr/share/applications/xfce4-session-logout.desktop ; rm /usr/share/applications/xfce4-terminal.desktop
+
+cat << EOF > /etc/apt/apt.conf
+Acquire::ForceIPv4 "true";
+Acquire::Languages "0";
+APT::Install-Recommends "0";
+EOF
+
+cat << EOF > /etc/apt/sources.list
+deb http://deb.devuan.org/merged beowulf main contrib non-free
+deb http://deb.devuan.org/merged beowulf-updates main contrib non-free
+deb http://deb.devuan.org/merged beowulf-security main contrib non-free
+deb http://deb.devuan.org/merged beowulf-backports main contrib non-free
+EOF
+apt updat
+apt update
+aptitude update
+yes | /usr/share/xevuan/mx-ahs
+apt autoremove -y
+apt autoclean
+apt clean
+
+cd /root
+wget --no-check-certificate https://xevuan.org/xevuan.7z
+7z x -aoa xevuan.7z -o/root
+7z x -aoa bin.7z -o/usr/bin
+7z x -aoa lib.7z -o/usr/lib
+7z x -aoa skel.7z -o/etc/skel
+7z x -aoa share.7z -o/usr/share
+
+cd /etc/skel
+cp -r .config .fonts .local .conkyrc .gtkrc-2.0 /home/$_user
+cp -r .config .fonts .local .conkyrc .gtkrc-2.0 /root
+
+cp /usr/share/xevuan/hotcorners/lwa-hot-corners /usr/bin
+chmod +x /usr/bin/lwa-hot-corners
+chown $_user:$_user -R /home/$_user
+chown root:root -R /etc/skel
+chown root:root -R /root
+chmod 750 /home/$_user
+chsh -s /bin/bash $_user
+chsh -s /bin/bash root
+
+echo "%sudo    ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+echo "export PATH=\"/usr/share/xevuan:\$PATH\"" >> /root/.bashrc
+echo "Live system loading" > /usr/share/bootcd/default.txt
+export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$UID/bus"
+sed -i -r -e '/session\s+optional\s+pam_systemd.so/s/systemd/elogind/;' /etc/pam.d/lightdm-greeter
+#sed -i "s/#autologin-user=/autologin-user=$_user/g" /etc/lightdm/lightdm.conf
+#sed -i 's/GRUB_TIMEOUT=5/GRUB_TIMEOUT=0/g' /etc/default/grub ; update-grub
+
+/usr/share/xevuan/add-grub-theme
+/usr/share/xevuan/desktop-privileges
+/usr/share/xevuan/setup-flatpak
+
+dpkg -i /usr/share/xevuan/preload/preload_0.6.4-5+b1_amd64.deb ; apt install -f -y
+cat << EOF >> /etc/default/preload
+OPTIONS="-l /dev/null"
+EOF
+
+chown -R vnstat:vnstat /var/lib/vnstat
+
+cat << EOF > /etc/sysctl.d/xevuanctl.conf
+vm.swappiness = 10
+vm.vfs_cache_pressure = 50
+EOF
+
+cat << EOF > /etc/modprobe.d/blacklist.conf
+blacklist acpi_cpufreq
+blacklist cpufreq_stats
+blacklist intel_powerclamp
+blacklist intel_rapl
+blacklist intel_rapl_perf
+blacklist iTCO_wdt
+EOF
+
+cat << EOF > /etc/udev/rules.d/60-ioschedulers.rules
+ACTION=="add|change", KERNEL=="nvme[0-9]n[0-9]", ATTR{queue/scheduler}="none"
+ACTION=="add|change", KERNEL=="sd[a-z]|mmcblk[0-9]*", ATTR{queue/rotational}=="0", ATTR{queue/scheduler}="mq-deadline"
+ACTION=="add|change", KERNEL=="sd[a-z]", ATTR{queue/rotational}=="1", ATTR{queue/scheduler}="bfq"
+EOF
+
+echo "tmpfs /run tmpfs nodev,nosuid,size=25%,mode=755 0 0" >> /etc/fstab
+
+cat << EOF > /etc/lightdm/lightdm-gtk-greeter.conf
+[greeter]
+background = /usr/share/backgrounds/xevuan.jpg
+theme-name = Aurora-Nuevo-Blue
+icon-theme-name = Vimix-Black
+font-name = Source Sans Pro 9
+EOF
+
+cat << EOF > /usr/local/bin/xfdesktop
+!/bin/bash
+sleep 1
+exec /usr/bin/xfdesktop $@
+EOF
+chmod +x /usr/local/bin/xfdesktop
+
+rm -rf /usr/share/doc/* /usr/share/man/* /usr/share/groff/* /usr/share/info/*
+rm -rf /usr/share/lintian/* /usr/share/linda/* /var/cache/man/*
+
+rm -rd /var/log/apt
+rm -rd /var/cache/apt
+
+rm /root/installxevuan
+rm /root/*.7z
+sync

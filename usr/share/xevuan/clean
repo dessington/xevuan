@@ -1,0 +1,11 @@
+#!/bin/bash
+
+clear
+sleep 1
+bleachbit -c --preset
+echo ""
+sync
+
+echo "Clean complete"
+sleep 2
+echo ""

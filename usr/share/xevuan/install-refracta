@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo "Install Refracta"
+cd /usr/share/xevuan/refracta
+dpkg -i *.deb ; apt install -f -y
+cp splash.png /usr/lib/refractasnapshot/iso/isolinux
+rm /usr/share/applications/yad-icon-browser.desktop
+rm /usr/share/applications/debian-uxterm.desktop
+rm /usr/share/applications/debian-xterm.desktop
+notify-send "Installation complete"

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Extras
+Comment=
+Exec=sudo xfce4-terminal -e '/usr/share/xevuan/menu/start'
+Icon=run-build-configure
+Path=/usr/share/xevuan/menu
+Terminal=false
+StartupNotify=false
+Categories=Settings;
+
+Name[en_ZA]=Extras

@@ -1,0 +1,4 @@
+#!/bin/bash
+meminfo=`free -m -h | grep 'Mem:'`
+used=`echo $meminfo | cut -d" " -f3`
+echo "$used"

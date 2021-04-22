@@ -1,0 +1,3 @@
+#!/bin/bash
+
+/opt/firefox/firefox "https://packages.debian.org/search?keywords="$1

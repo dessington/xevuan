@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/bin/lwa-hot-corners /usr/share/xevuan/hotcorners/hotcorner.conf
